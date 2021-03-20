@@ -6,6 +6,7 @@ const UseStateCounter = () => {
   const initialValue = 10;
   const [value, setValue] = useState(initialValue);
   const [txtStart, setTextStart] = useState('Start');
+  const screenfull = require('screenfull');
 
   function start() {
     if (txtStart.toLowerCase() === 'stop') {
@@ -41,6 +42,12 @@ const UseStateCounter = () => {
     setValue(initialValue);
   }
 
+  function fullscreenToggler() {
+    if (screenfull.isEnabled) {
+      screenfull.toggle();
+    }
+  }
+
   return (
     <>
       <section style={{ margin: '4rem 1rem' }}>
@@ -61,7 +68,9 @@ const UseStateCounter = () => {
         <button className="btn" onClick={reset}>
           reset
         </button>
-        <button className="btn">fullscreen</button>
+        <button className="btn" onClick={fullscreenToggler}>
+          fullscreen
+        </button>
       </section>
     </>
   );
