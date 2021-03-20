@@ -341,7 +341,7 @@ https://codepen.io/artboardartisan/pen/VLzKVN
 }
 
 #progress {
-  background: #75b800;
+  background: var(--clr-green-dark);
   color: #fff;
   padding: 5px 0;
   width: 0%;

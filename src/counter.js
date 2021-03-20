@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import screenfull from 'screenfull';
+import beep from './beep.wav';
 
 let counterId;
+let alarm = new Audio(beep);
 
 const UseStateCounter = () => {
   const initialValue = 10;
   const [value, setValue] = useState(initialValue);
   const [txtStart, setTextStart] = useState('Start');
-  const screenfull = require('screenfull');
 
   function start() {
     if (txtStart.toLowerCase() === 'stop') {
@@ -14,7 +16,7 @@ const UseStateCounter = () => {
       setTextStart('Start');
     }
     if (txtStart.toLowerCase() === 'ok') {
-      // TODO: stop ring
+      stopAlarm();
     }
     if (txtStart.toLowerCase() === 'start') {
       setTextStart('Stop');
@@ -22,7 +24,7 @@ const UseStateCounter = () => {
         setValue((preValue) => {
           if (preValue === 1) {
             setTextStart('OK');
-            // TODO: ring
+            playAlarm();
             clearInterval(counterId);
             return preValue - 1;
           }
@@ -45,7 +47,31 @@ const UseStateCounter = () => {
   function fullscreenToggler() {
     if (screenfull.isEnabled) {
       screenfull.toggle();
+      if (!screenfull.isFullscreen) {
+        // TODO: center text
+        console.log('center');
+      } else {
+        // TODO: back to normal
+        console.log('normal');
+      }
     }
+  }
+
+  function playAlarm() {
+    alarm.play();
+    alarm.addEventListener(
+      'ended',
+      () => {
+        alarm.currentTime = 0;
+        alarm.play();
+      },
+      false
+    );
+  }
+
+  function stopAlarm() {
+    alarm.pause();
+    alarm.currentTime = 0;
   }
 
   return (
